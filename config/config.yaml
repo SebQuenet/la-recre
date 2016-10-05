@@ -1,0 +1,9 @@
+default:
+  bodyshops:
+    top_count_default: 10
+  port: 8080
+  debug: true
+  auth:
+    jwt:
+      secret: 'rMucRdytTfe863S7Jqf89294ZRkZ2j2g'
+    adminSecret: '5siVlBs67qnPUVoYmF2dPoxaCWZH9xM5'

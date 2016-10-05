@@ -1,0 +1,56 @@
+html, body {
+    height: 100%;
+    width: 100%;
+}
+
+div.recre_container {
+    display: flex;
+    flex: 1;
+    flex-flow: column;
+    flex-direction:column;
+    height: 100%;
+}
+
+div.recre_logo {
+    background-image:    url(/images/logo-big.png);
+    background-size:     contain;                      /* <------ */
+    background-repeat:   no-repeat;
+    background-position: center center;              /* optional, center the image */
+    width: 50%;
+    height: 50%;
+    margin: 0 auto;
+    display: flex;
+    flex: 1;
+    margin-top: 10%;
+    margin-bottom: 10%;
+}
+
+div.recre_title {
+    font-weight: normal;
+    font-size: 100px;
+    font-family: 'cursive_standardregular';
+    display: flex;
+    flex: 1;
+    text-align: center;
+    margin: 0 auto;
+}
+
+
+span.color1 {
+    color: #1f5ccf;
+    display: inline-block;
+}
+
+span.color2 {
+    color: #cfbc1f;
+    display: inline-block;
+}
+
+span.color3 {
+    color: #cf1f3c;
+    display: inline-block;
+}
+
+div.recre_footer {
+    flex: 1 100%;
+}
