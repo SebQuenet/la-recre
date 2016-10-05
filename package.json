@@ -1,0 +1,24 @@
+{
+  "name": "la-recre",
+  "version": "1.0.0",
+  "description": "Site web de la recre, association de parents d'eleves d'Ercuis",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sebquenet/la-recre.git"
+  },
+  "keywords": [
+    "non-profit",
+    "association",
+    "website"
+  ],
+  "author": "Sebastien Quenet",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sebquenet/la-recre/issues"
+  },
+  "homepage": "https://github.com/sebquenet/la-recre#readme"
+}
