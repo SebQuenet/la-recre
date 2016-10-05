@@ -2,7 +2,7 @@
   "name": "la-recre",
   "version": "1.0.0",
   "description": "Site web de la recre, association de parents d'eleves d'Ercuis",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "test"
   },
