@@ -1,24 +1,30 @@
+/* global __dirname */
+
 'use strict';
 
+// Externals
 const bodyParser = require('koa-bodyparser'),
       compress = require('koa-compress'),
       cors = require('kcors'),
       errorHandler = require('koa-error'),
       http = require('http'),
       Koa = require('koa'),
-      Router = require('koa-router'),
+      KoaRouter = require('koa-router'),
       socketIO = require('socket.io'),
-      winston = require('winston');
-const staticCache = require('koa-static-cache');
+      winston = require('winston'),
+      staticCache = require('koa-static-cache'),
+      path = require('path');
 
+
+// Config
 const config = require('./config');
-const path = require('path');
-
+config.rootDir = __dirname;
 
 // Logging
 winston.remove(winston.transports.Console);
 winston.add(winston.transports.Console, { timestamp: true });
 winston.level = 'debug';
+
 // Configure KOA framework
 const app = new Koa();
 app.name = 'La Recre web server';
@@ -28,46 +34,33 @@ app.use(compress());
 app.use(bodyParser());
 
 
-// Static cache management
+// Static cache management, a voir avec Varnish par la suite
 const files = {};
 app.use(staticCache('public/js', {}, files));
 staticCache('public/css', {}, files);
 staticCache('public/fonts', {}, files);
 staticCache('public/images', {}, files);
 
-const fs = require('fs');
-
-const readFileThunk = function(src) {
-  return new Promise(function (resolve, reject) {
-    fs.readFile(src, {'encoding': 'utf8'}, function (err, data) {
-      if(err) return reject(err);
-      resolve(data);
-    });
-  });
-}
-
-const rootRouter = Router();
-rootRouter.get('/', function *(){
-  this.body = yield readFileThunk(__dirname + '/public/index.html');
-});
-
-
-app.use(staticCache(path.join(__dirname, 'public'), {
+app.use(staticCache(path.join(`${__dirname}/public`), {
     maxAge: 365 * 24 * 60 * 60,
 }));
 
 // Create server and Socket.IO
-const httpServer = http.Server(app.callback()),
+const httpServer = new http.Server(app.callback()),
       io = socketIO(httpServer);
-// Define routes
-const router = new Router();
 
+// Define routes
+const router = new KoaRouter();
+
+// Frontend
+router.get('/', require('./frontend/')(config, io));
+
+// API
 router.use('/api/forums', require('./api/forums/')(config, io));
-router.get('/', function *(next){
-    this.body = yield readFileThunk(__dirname + '/public/index.html');
-});
 
 app.use(router.routes());
+
+
 // Start server
 const server = httpServer.listen(config.port, (err) => {
     if (err) {
@@ -75,6 +68,5 @@ const server = httpServer.listen(config.port, (err) => {
     }
     winston.info('%s listening at http://localhost:%d', app.name, config.port, config.env);
 });
+
 module.exports = server;
-
-
