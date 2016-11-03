@@ -8,7 +8,8 @@ module.exports = (config) => {
     };
 
     function *homePage() {
-        this.body = yield readFileThunk(`${config.rootDir}/public/index.html`);
+//        this.body = yield readFileThunk(`${config.rootDir}/public/index.html`);
+       this.body = yield readFileThunk(`${__dirname}/build/index.html`);
     }
 };
 
